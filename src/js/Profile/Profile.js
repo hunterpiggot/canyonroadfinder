@@ -16,55 +16,58 @@ function Profile () {
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
 
 	const { user } = useParams();
-	useEffect(() => {
-		const userDetails = async () => {
-			const userDetails = await axios.get(`${BackEndUrl}/users/${user}`);
-			setUserInfo(userDetails.data);
-		};
-		const getUsersTaggedRoads = async () => {
-			const res = await axios(`${BackEndUrl}/users/${localStorage.getItem('user')}/roads`);
-			setUserRoadStatus(res.data.roads);
-		};
-		const userRoads = async () => {
-			const userRoads = await axios.get(`${BackEndUrl}/users/${user}/roads`);
-			let favoriteRoadsList = [];
-			let plannedRoadsList = [];
-			let drivenRoadsList = [];
-			for (let i of userRoads.data['roads']) {
-				let statusArr = i.status.split(', ');
-				if (statusArr.includes('driven')) {
-					drivenRoadsList.push(i);
+	useEffect(
+		() => {
+			const userDetails = async () => {
+				const userDetails = await axios.get(`${BackEndUrl}/users/${user}`);
+				setUserInfo(userDetails.data);
+			};
+			const getUsersTaggedRoads = async () => {
+				const res = await axios(`${BackEndUrl}/users/${localStorage.getItem('user')}/roads`);
+				setUserRoadStatus(res.data.roads);
+			};
+			const userRoads = async () => {
+				const userRoads = await axios.get(`${BackEndUrl}/users/${user}/roads`);
+				let favoriteRoadsList = [];
+				let plannedRoadsList = [];
+				let drivenRoadsList = [];
+				for (let i of userRoads.data['roads']) {
+					let statusArr = i.status.split(', ');
+					if (statusArr.includes('driven')) {
+						drivenRoadsList.push(i);
+					}
+					if (statusArr.includes('planned')) {
+						plannedRoadsList.push(i);
+					}
+					if (statusArr.includes('favorite')) {
+						favoriteRoadsList.push(i);
+					}
 				}
-				if (statusArr.includes('planned')) {
-					plannedRoadsList.push(i);
+				let favoriteRoads = [];
+				for (let road of favoriteRoadsList) {
+					const roadDetails = await axios.get(`${BackEndUrl}/road/${road.road_id}`);
+					favoriteRoads.push(roadDetails.data);
 				}
-				if (statusArr.includes('favorite')) {
-					favoriteRoadsList.push(i);
+				let plannedRoads = [];
+				for (let road of plannedRoadsList) {
+					const roadDetails = await axios.get(`${BackEndUrl}/road/${road.road_id}`);
+					plannedRoads.push(roadDetails.data);
 				}
-			}
-			let favoriteRoads = [];
-			for (let road of favoriteRoadsList) {
-				const roadDetails = await axios.get(`${BackEndUrl}/road/${road.road_id}`);
-				favoriteRoads.push(roadDetails.data);
-			}
-			let plannedRoads = [];
-			for (let road of plannedRoadsList) {
-				const roadDetails = await axios.get(`${BackEndUrl}/road/${road.road_id}`);
-				plannedRoads.push(roadDetails.data);
-			}
-			let drivenRoads = [];
-			for (let road of drivenRoadsList) {
-				const roadDetails = await axios.get(`${BackEndUrl}/road/${road.road_id}`);
-				drivenRoads.push(roadDetails.data);
-			}
-			setUserFavoriteRoads(favoriteRoads);
-			setUserDrivenRoads(drivenRoads);
-			setUserPlannedRoads(plannedRoads);
-		};
-		getUsersTaggedRoads();
-		userDetails();
-		userRoads();
-	}, []);
+				let drivenRoads = [];
+				for (let road of drivenRoadsList) {
+					const roadDetails = await axios.get(`${BackEndUrl}/road/${road.road_id}`);
+					drivenRoads.push(roadDetails.data);
+				}
+				setUserFavoriteRoads(favoriteRoads);
+				setUserDrivenRoads(drivenRoads);
+				setUserPlannedRoads(plannedRoads);
+			};
+			getUsersTaggedRoads();
+			userDetails();
+			userRoads();
+		},
+		[ user ]
+	);
 
 	const renderRoadCards = (roads) => {
 		const roadList = roads.map((r) => {

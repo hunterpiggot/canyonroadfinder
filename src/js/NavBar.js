@@ -6,12 +6,10 @@ function NavBar () {
 	const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 	useEffect(() => {
 		const checkLoggedIn = () => {
-			console.log('HERE');
 			if (localStorage.getItem('user')) {
 				setIsLoggedIn(true);
 			}
 		};
-
 		checkLoggedIn();
 	}, []);
 	return (

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Route } from 'react-router';
 import axios from 'axios';
 
 import BackEndUrl from '../RouteUrls';
