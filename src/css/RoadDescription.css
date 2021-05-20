@@ -1,5 +1,4 @@
-h1,
-h3 {
+h1 {
 	text-align: center;
 }
 /* p {
@@ -24,9 +23,27 @@ h3 {
 }
 
 .RoadDescription-details {
+	/* margin-top: 40px; */
 	float: left;
 	width: 20%;
 	/* margin-left: 5%; */
+}
+
+#locationbutton {
+	justify-content: center;
+}
+
+h3 {
+	text-align: center;
+}
+
+.RoadDescription-description {
+	text-align: center;
+}
+
+.RoadDescription-description-h3 {
+	margin-top: 10px;
+	text-align: center;
 }
 
 table {
@@ -55,4 +72,8 @@ table th {
 	text-align: center;
 	background-color: #cccccc;
 	color: black;
+}
+
+#statussymbols {
+	padding-right: 40%;
 }

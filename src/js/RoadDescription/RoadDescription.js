@@ -17,8 +17,15 @@ function RoadDescription () {
 	const [ alreadyRated, setAlreadyRated ] = useState(false);
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
 
+	const [ userLocation, setUserLocation ] = useState(false);
+
 	useEffect(
 		() => {
+			const checkUserLocation = () => {
+				if (localStorage.getItem('location')) {
+					setUserLocation(true);
+				}
+			};
 			const getRoad = async () => {
 				const res = await axios(`${BackEndUrl}/road/${id}`);
 				setRoad(res.data);
@@ -46,6 +53,7 @@ function RoadDescription () {
 					setUserRoadStatus(res.data['status'].split(', '));
 				}
 			};
+			checkUserLocation();
 			getRoadStatus();
 			getRoad();
 			getRatings();
@@ -90,6 +98,7 @@ function RoadDescription () {
 				let crd = pos.coords;
 
 				if (localStorage.getItem('user')) {
+					setUserLocation(true);
 					let data = {
 						lat : crd.latitude.toString(),
 						lng : crd.longitude.toString()
@@ -150,47 +159,7 @@ function RoadDescription () {
 			<h1>{road.name}</h1>
 			<div className="RoadDescription-status-tags">
 				<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.5.0/css/all.css" />
-				{userRoadStatus.includes('favorite') ? (
-					<div onClick={removeItem} id="favorite-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="favorite" className="fas fa-star fa-fw fa-1x" />
-						</span>
-					</div>
-				) : (
-					<div onClick={addItem} id="favorite-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="favorite" className="far fa-star" />
-						</span>
-					</div>
-				)}
-				{userRoadStatus.includes('planned') ? (
-					<div onClick={removeItem} id="planned-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="planned" className="fas fa-calendar-check" />
-						</span>
-					</div>
-				) : (
-					<div onClick={addItem} id="planned-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="planned" className="far fa-calendar" />
-						</span>
-					</div>
-				)}
-				{userRoadStatus.includes('driven') ? (
-					<div onClick={removeItem} id="driven-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="driven" className="fas fa-check-circle" />
-						</span>
-					</div>
-				) : (
-					<div onClick={addItem} id="driven-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="driven" className="far fa-check-circle" />
-						</span>
-					</div>
-				)}
 			</div>
-			<button onClick={getLocation}>Get Location</button>
 			<div className="RoadDescription-map-and-details">
 				<div className="RoadDescription-details">
 					<table>
@@ -223,6 +192,92 @@ function RoadDescription () {
 							<tr>
 								<td>Difficulty Rating:</td>
 								<td>{difficultyRating} / 10</td>
+							</tr>
+							{userLocation ? (
+								<tr />
+							) : (
+								<tr>
+									<td colSpan="2">
+										<button id="locationbutton" onClick={getLocation}>
+											Get Location
+										</button>
+									</td>
+								</tr>
+							)}
+							{/* <tr>
+								<td colSpan="2">
+									<button id="locationbutton" onClick={getLocation}>
+										Get Location
+									</button>
+								</td>
+							</tr> */}
+							<tr>
+								<td id="statussymbols" colSpan="2">
+									{userRoadStatus.includes('favorite') ? (
+										<div
+											onClick={removeItem}
+											id="favorite-item"
+											className="star-rating toggle-icons toggle-info"
+										>
+											<span className="icon icon-default">
+												<i id="favorite" className="fas fa-star fa-fw fa-1x" />
+											</span>
+										</div>
+									) : (
+										<div
+											onClick={addItem}
+											id="favorite-item"
+											className="star-rating toggle-icons toggle-info"
+										>
+											<span className="icon icon-default">
+												<i id="favorite" className="far fa-star" />
+											</span>
+										</div>
+									)}
+									{userRoadStatus.includes('planned') ? (
+										<div
+											onClick={removeItem}
+											id="planned-item"
+											className="star-rating toggle-icons toggle-info"
+										>
+											<span className="icon icon-default">
+												<i id="planned" className="fas fa-calendar-check" />
+											</span>
+										</div>
+									) : (
+										<div
+											onClick={addItem}
+											id="planned-item"
+											className="star-rating toggle-icons toggle-info"
+										>
+											<span className="icon icon-default">
+												<i id="planned" className="far fa-calendar" />
+											</span>
+										</div>
+									)}
+									{userRoadStatus.includes('driven') ? (
+										<div
+											onClick={removeItem}
+											id="driven-item"
+											className="star-rating toggle-icons toggle-info"
+										>
+											<span className="icon icon-default">
+												<i id="driven" className="fas fa-check-circle" />
+											</span>
+										</div>
+									) : (
+										<div
+											onClick={addItem}
+											id="driven-item"
+											className="star-rating toggle-icons toggle-info"
+										>
+											<span className="icon icon-default">
+												<i id="driven" className="far fa-check-circle" />
+											</span>
+										</div>
+									)}
+								</td>
+								{/* <td>{difficultyRating} / 10</td> */}
 							</tr>
 						</tbody>
 					</table>
