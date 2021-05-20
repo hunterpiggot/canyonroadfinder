@@ -1,0 +1,93 @@
+
+.Profile-UserInfo {
+	float: left;
+	margin-left: 50px;
+	border: 1px solid black;
+    display: block;
+    margin-right: 50px;
+    margin-bottom: 100vh;
+    padding: 20px;
+}
+
+#user-email {
+    font-size: 1rem;
+}
+#user-name {
+    font-size: 1.5rem;
+}
+
+#Status-Buttons {
+	/* justify-content: center; */
+	display: flex;
+	margin: auto;
+	align-items: center;
+	/* background-color: blueviolet; */
+	height: 50px;
+}
+
+
+.status-button {
+	display: inline-block;
+	padding: 0.35em 1.2em;
+    /* background-color: #414141; */
+	/* box-sizing: border-box; */
+	/* text-decoration: none; */
+	font-family: 'Roboto', sans-serif;
+	font-weight: 300;
+	color: #ffffff;
+	text-align: center;
+    /* width: 15rem; */
+    width: 30%;
+	transition: all 0.2s;
+}
+
+.roads {
+    margin-left: 17%;
+}
+
+.Roads-Buttons {
+    width: 80%;
+    /* background-color: burlywood; */
+    margin-left: auto;
+    margin-right: auto;
+    /* display: flex; */
+}
+
+#status-button:hover{
+    color:#000000;
+    background-color:#FFFFFF;
+}
+
+@media only screen and (max-width: 1100px) {
+    #Status-Buttons {
+        width: 100%;
+        /* justify-content: center; */
+        display: flex;
+        margin: auto;
+        align-items: center;
+        /* background-color: blueviolet; */
+        height: 50px;
+        margin-bottom: 0vh;
+    }
+    
+    
+    .status-button {
+        display: inline-block;
+        padding: 0.35em 1.2em;
+        /* background-color: #414141; */
+        /* box-sizing: border-box; */
+        /* text-decoration: none; */
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        color: #ffffff;
+        text-align: center;
+        /* width: 15rem; */
+        width: 100%;
+        transition: all 0.2s;
+    }
+    
+    #status-button:hover{
+        color:#000000;
+        background-color:#FFFFFF;
+    }
+}

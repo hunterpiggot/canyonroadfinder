@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import BackEndUrl from '../RouteUrls';
 import RoadCard from '../RoadList/RoadCard';
+import '../../css/Profile.css';
 
 import EditProfileForm from '../Auth/EditProfileForm';
 
@@ -14,6 +15,11 @@ function Profile () {
 	const [ status, setStatus ] = useState('planned');
 	const [ editProfile, setEditProfile ] = useState(false);
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
+	const [ buttonStyle, setButtonStyle ] = useState({
+		b1 : '#303030',
+		b2 : '#414141',
+		b3 : '#414141'
+	});
 
 	const { user } = useParams();
 	useEffect(
@@ -105,12 +111,30 @@ function Profile () {
 	};
 
 	const changeStatusPlanned = () => {
+		const newState = {
+			b1 : '#303030',
+			b2 : '#414141',
+			b3 : '#414141'
+		};
+		setButtonStyle(newState);
 		setStatus('planned');
 	};
 	const changeStatusFavorite = () => {
+		const newState = {
+			b1 : '#414141',
+			b2 : '#303030',
+			b3 : '#414141'
+		};
+		setButtonStyle(newState);
 		setStatus('favorite');
 	};
 	const changeStatusDriven = () => {
+		const newState = {
+			b1 : '#414141',
+			b2 : '#414141',
+			b3 : '#303030'
+		};
+		setButtonStyle(newState);
 		setStatus('driven');
 	};
 
@@ -120,16 +144,45 @@ function Profile () {
 	return (
 		<div>
 			<h1>Profile</h1>
+
 			<div className="Profile-UserInfo">
-				<p>{userInfo.email}</p>
-				<p>{userInfo.name}</p>
+				<p id="user-name">{userInfo.name}</p>
+				<p id="user-email">{userInfo.email}</p>
+				<p>Planned Roads: {userPlannedRoads.length}</p>
+				<p>Favorite Roads: {userFavoriteRoads.length}</p>
+				<p>Driven Roads: {userDrivenRoads.length}</p>
 				<button onClick={renderEditProfile}>Edit Profile</button>
 				{editProfile ? <EditProfileForm /> : <div />}
 			</div>
-			<button onClick={changeStatusPlanned}>Planned</button>
-			<button onClick={changeStatusFavorite}>Favorite</button>
-			<button onClick={changeStatusDriven}>Driven</button>
-			{renderStatus()}
+			<div className="Roads-Buttons">
+				<div id="Status-Buttons">
+					<button
+						style={{ backgroundColor: buttonStyle['b1'] }}
+						className="status-button"
+						id="planned-button"
+						onClick={changeStatusPlanned}
+					>
+						Planned
+					</button>
+					<button
+						style={{ backgroundColor: buttonStyle['b2'] }}
+						className="status-button"
+						id="favorite-button"
+						onClick={changeStatusFavorite}
+					>
+						Favorite
+					</button>
+					<button
+						style={{ backgroundColor: buttonStyle['b3'] }}
+						className="status-button"
+						id="driven-button"
+						onClick={changeStatusDriven}
+					>
+						Driven
+					</button>
+				</div>
+				<div className="roads">{renderStatus()}</div>
+			</div>
 		</div>
 	);
 }

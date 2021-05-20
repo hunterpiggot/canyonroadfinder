@@ -39,15 +39,26 @@ function SignUpForm () {
 	return (
 		<div className="SignUpForm" onSubmit={handleSubmit}>
 			{invalidInput.length ? <h3>{invalidInput}</h3> : <div className="validInput" />}
-			<form>
-				<label>Name</label>
-				<input type="text" value={formData.name} name="name" onChange={handleChange} />
-				<label>Email</label>
-				<input type="email" value={formData.email} name="email" onChange={handleChange} />
-				<label>Password</label>
-				<input type="password" value={formData.password} name="password" onChange={handleChange} />
-				<button>Submit</button>
-			</form>
+			<div className="form">
+				<form onSubmit={handleSubmit} class="login-form">
+					<input onChange={handleChange} name="name" value={formData.name} type="text" placeholder="Name" />
+					<input
+						onChange={handleChange}
+						name="email"
+						value={formData.email}
+						type="email"
+						placeholder="E-mail"
+					/>
+					<input
+						onChange={handleChange}
+						name="password"
+						value={formData.password}
+						type="password"
+						placeholder="password"
+					/>
+					<button>Sign Up</button>
+				</form>
+			</div>
 			<div className="TestWarning" />
 		</div>
 	);

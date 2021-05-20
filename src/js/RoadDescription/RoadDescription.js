@@ -71,6 +71,7 @@ function RoadDescription () {
 		height : '100%',
 		width  : '100%'
 	};
+
 	const loop = road.loop ? road.loop.toString() : 'false';
 	const latlng = road.latLong ? road.latLong.split(', ') : [ '38.8320083404165', '-104.8422776269326' ];
 	const defaultCenter = {

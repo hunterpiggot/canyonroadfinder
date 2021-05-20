@@ -1,0 +1,51 @@
+.ratingcontainer {
+    background-color: #ffffff;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 40px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+.ratinguser {
+    padding-top: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    justify-content: left;
+    position: relative;
+    margin-left: 20px;
+}
+
+.ratingdescription {
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* margin-left: 50px; */
+    /* margin-right: 50px; */
+}
+
+.ratingoveralldifficulty {
+    width: 100%;
+    height: 20px;
+    justify-content: center;
+    position: relative;
+    display: inline;
+    overflow: hidden;
+}
+
+#ratingoverall {
+    margin-left: 40%;
+}
+#ratingdifficulty{
+    margin-left: 30px;
+}
+
+.ratingrating {
+    width: 100%;
+}
+#ratingbutton {
+    float: right;
+    position: relative;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-top: -20px;
+}

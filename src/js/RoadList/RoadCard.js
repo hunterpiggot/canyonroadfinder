@@ -55,11 +55,11 @@ function RoadCard ({ id, name, location, elevation_change, length, image, status
 		<div onClick={showDetails} className={isShowing}>
 			<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.5.0/css/all.css" />
 			<Link to={`/roads/${id}`}>
-				<div className="card__image-holder">
-					<img className="card__image" src={image} alt="wave" />
+				<div className="Road-crd__image-holder">
+					<img className="Road-crd__image" src={image} alt="wave" />
 				</div>
 			</Link>
-			<div className="card-title">
+			<div className="Road-crd-title">
 				<div id="name-location">
 					<div id="name">{name}</div>
 					<small id="location">{location}</small>

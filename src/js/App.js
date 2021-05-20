@@ -11,6 +11,7 @@ import Login from './Auth/Login';
 import SignUp from './Auth/SignUp';
 import Logout from './Auth/Logout';
 import Profile from './Profile/Profile';
+import '../css/App.css';
 
 function App () {
 	return (

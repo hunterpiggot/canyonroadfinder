@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import BackEndUrl from '../RouteUrls';
+import '../../css/LoginForm.css';
 
 function LoginForm () {
 	const [ formData, setFormData ] = useState({
@@ -39,13 +40,25 @@ function LoginForm () {
 	return (
 		<div className="LoginForm" onSubmit={handleSubmit}>
 			{invalidInput.length ? <h3>{invalidInput}</h3> : <div className="validInput" />}
-			<form>
-				<label>Email</label>
-				<input type="email" value={formData.email} name="email" onChange={handleChange} />
-				<label>Password</label>
-				<input type="password" value={formData.password} name="password" onChange={handleChange} />
-				<button>Login</button>
-			</form>
+			<div className="form">
+				<form onSubmit={handleSubmit} class="login-form">
+					<input
+						onChange={handleChange}
+						name="email"
+						value={formData.email}
+						type="email"
+						placeholder="E-mail"
+					/>
+					<input
+						onChange={handleChange}
+						name="password"
+						value={formData.password}
+						type="password"
+						placeholder="password"
+					/>
+					<button>login</button>
+				</form>
+			</div>
 		</div>
 	);
 }
