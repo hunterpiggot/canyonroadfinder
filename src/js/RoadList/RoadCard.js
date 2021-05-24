@@ -6,17 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 
 function RoadCard ({ id, name, location, elevation_change, length, image, status }) {
-	const [ isShowing, setIsShowing ] = useState('card showing');
 	const [ userRoadStatus, setUserRoadStatus ] = useState(status);
-
-	const showDetails = () => {
-		if (isShowing === 'card showing') {
-			setIsShowing('card show');
-		}
-		else {
-			setIsShowing('card showing');
-		}
-	};
 
 	const addItem = async (e) => {
 		const target = e.target.id;
@@ -25,10 +15,9 @@ function RoadCard ({ id, name, location, elevation_change, length, image, status
 			user_email : localStorage.getItem('user'),
 			status     : target
 		};
-		console.log(data);
+
 		await axios.post(`${BackEndUrl}/road/userRoadList/add`, data).then((res) => res.data).then((data) => {
 			if (data.status.length) {
-				console.log();
 				setUserRoadStatus([ ...userRoadStatus, target ]);
 			}
 		});
@@ -55,12 +44,10 @@ function RoadCard ({ id, name, location, elevation_change, length, image, status
 
 	return (
 		<Col md={{ span: 4 }}>
-			{/* <Card style={{ width: '18rem', maxWidth: '500px' }}> */}
 			<Card style={{ maxWidth: '500px', marginBottom: '30px', marginTop: '10px' }}>
 				<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.5.0/css/all.css" />
 				<Link to={`/roads/${id}`}>
 					<Card.Img style={{ height: '18rem' }} variant="top" src={image} />
-					{/* <Card.Img variant="top" src={image} /> */}
 				</Link>
 				<Card.Body>
 					<Link to={`/roads/${id}`}>

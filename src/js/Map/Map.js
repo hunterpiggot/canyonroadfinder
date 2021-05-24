@@ -16,7 +16,6 @@ function Map () {
 					lat : Number(userLocation[0]),
 					lng : Number(userLocation[1])
 				};
-				console.log(locationDic);
 				setLocation(locationDic);
 			}
 		};

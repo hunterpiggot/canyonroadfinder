@@ -33,7 +33,6 @@ function RoadDescription () {
 			};
 			const getRatings = async () => {
 				const res = await axios(`${BackEndUrl}/road/${id}/rating`);
-				console.log(res.data);
 				setRatings(res.data);
 				let overallRatingSum = 0;
 				let difficultyRatingSum = 0;
@@ -48,13 +47,11 @@ function RoadDescription () {
 					setOverallRating(Math.round(overallRatingSum / res.data['ratings'].length * 100) / 100);
 					setDifficultyRating(Math.round(difficultyRatingSum / res.data['ratings'].length * 100) / 100);
 				}
-				// setDifficultyRating(Math.round(difficultyRatingSum / res.data['ratings'].length * 100) / 100);
 			};
 			const getRoadStatus = async () => {
 				if (localStorage.getItem('user')) {
 					const res = await axios(`${BackEndUrl}/road/userRoadList/${localStorage.getItem('user')}/${id}`);
-					// let statusString = res.data['status'].split(', ');
-					// console.log(statusString);
+
 					setUserRoadStatus(res.data['status'].split(', '));
 				}
 			};
@@ -135,7 +132,6 @@ function RoadDescription () {
 		};
 		await axios.post(`${BackEndUrl}/road/userRoadList/add`, data).then((res) => res.data).then((data) => {
 			if (data.status.length) {
-				console.log();
 				setUserRoadStatus([ ...userRoadStatus, target ]);
 			}
 		});
@@ -210,13 +206,6 @@ function RoadDescription () {
 									</td>
 								</tr>
 							)}
-							{/* <tr>
-								<td colSpan="2">
-									<button id="locationbutton" onClick={getLocation}>
-										Get Location
-									</button>
-								</td>
-							</tr> */}
 							<tr>
 								<td id="statussymbols" colSpan="2">
 									{userRoadStatus.includes('favorite') ? (
@@ -271,7 +260,6 @@ function RoadDescription () {
 										</span>
 									)}
 								</td>
-								{/* <td>{difficultyRating} / 10</td> */}
 							</tr>
 						</tbody>
 					</Table>

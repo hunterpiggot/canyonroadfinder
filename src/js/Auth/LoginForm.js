@@ -74,28 +74,6 @@ function LoginForm () {
 				</Jumbotron>
 			</Col>
 		</Row>
-		// <div className="LoginForm" onSubmit={handleSubmit}>
-		// 	{invalidInput.length ? <h3>{invalidInput}</h3> : <div className="validInput" />}
-		// 	<div className="form">
-		// 		<form onSubmit={handleSubmit} class="login-form">
-		// 			<input
-		// 				onChange={handleChange}
-		// 				name="email"
-		// 				value={formData.email}
-		// 				type="email"
-		// 				placeholder="E-mail"
-		// 			/>
-		// 			<input
-		// 				onChange={handleChange}
-		// 				name="password"
-		// 				value={formData.password}
-		// 				type="password"
-		// 				placeholder="password"
-		// 			/>
-		// 			<button>login</button>
-		// 		</form>
-		// 	</div>
-		// </div>
 	);
 }
 

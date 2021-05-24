@@ -62,7 +62,6 @@ function RoadList () {
 						<CardDeck>{renderRoadCards(roads)}</CardDeck>
 					</Col>
 				</Row>
-				{/* <CardDeck>{renderRoadCards(roads)}</CardDeck> */}
 			</div>
 		</div>
 	);
