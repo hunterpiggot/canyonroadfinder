@@ -6,13 +6,14 @@ import '../../css/RoadDescription.css';
 import BackEndUrl from '../RouteUrls';
 import RatingCard from '../Ratings/RatingCard';
 import RatingForm from '../Ratings/RatingForm';
+import Table from 'react-bootstrap/Table';
 
 function RoadDescription () {
 	let { id } = useParams();
 
 	const [ road, setRoad ] = useState({});
 	const [ ratings, setRatings ] = useState({ ratings: [] });
-	const [ ovarallRating, setOverallRating ] = useState('-');
+	const [ overallRating, setOverallRating ] = useState('-');
 	const [ difficultyRating, setDifficultyRating ] = useState('-');
 	const [ alreadyRated, setAlreadyRated ] = useState(false);
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
@@ -35,15 +36,18 @@ function RoadDescription () {
 				setRatings(res.data);
 				let overallRatingSum = 0;
 				let difficultyRatingSum = 0;
-				for (let rating of res.data['ratings']) {
-					if (rating['user_email'] === localStorage.getItem('user')) {
-						setAlreadyRated(true);
+				if (res.data['ratings'].length > 4) {
+					for (let rating of res.data['ratings']) {
+						if (rating['user_email'] === localStorage.getItem('user')) {
+							setAlreadyRated(true);
+						}
+						overallRatingSum += rating.overall;
+						difficultyRatingSum += rating.difficulty;
 					}
-					overallRatingSum += rating.overall;
-					difficultyRatingSum += rating.difficulty;
+					setOverallRating(Math.round(overallRatingSum / res.data['ratings'].length * 100) / 100);
+					setDifficultyRating(Math.round(difficultyRatingSum / res.data['ratings'].length * 100) / 100);
 				}
-				setOverallRating(Math.round(overallRatingSum / res.data['ratings'].length * 100) / 100);
-				setDifficultyRating(Math.round(difficultyRatingSum / res.data['ratings'].length * 100) / 100);
+				// setDifficultyRating(Math.round(difficultyRatingSum / res.data['ratings'].length * 100) / 100);
 			};
 			const getRoadStatus = async () => {
 				if (localStorage.getItem('user')) {
@@ -162,7 +166,7 @@ function RoadDescription () {
 			</div>
 			<div className="RoadDescription-map-and-details">
 				<div className="RoadDescription-details">
-					<table>
+					<Table>
 						<thead>
 							<tr>
 								<th colSpan="2">Details</th>
@@ -187,7 +191,7 @@ function RoadDescription () {
 							</tr>
 							<tr>
 								<td>Overall Rating:</td>
-								<td>{ovarallRating} / 10</td>
+								<td>{overallRating} / 10</td>
 							</tr>
 							<tr>
 								<td>Difficulty Rating:</td>
@@ -214,73 +218,61 @@ function RoadDescription () {
 							<tr>
 								<td id="statussymbols" colSpan="2">
 									{userRoadStatus.includes('favorite') ? (
-										<div
-											onClick={removeItem}
+										<span
+											style={{ marginRight: '10px' }}
 											id="favorite-item"
-											className="star-rating toggle-icons toggle-info"
+											className="icon icon-default"
 										>
-											<span className="icon icon-default">
-												<i id="favorite" className="fas fa-star fa-fw fa-1x" />
-											</span>
-										</div>
+											<i id="favorite" onClick={removeItem} className="fas fa-star fa-fw fa-1x" />
+										</span>
 									) : (
-										<div
-											onClick={addItem}
+										<span
+											style={{ marginRight: '10px' }}
 											id="favorite-item"
-											className="star-rating toggle-icons toggle-info"
+											className="icon icon-default"
 										>
-											<span className="icon icon-default">
-												<i id="favorite" className="far fa-star" />
-											</span>
-										</div>
+											<i id="favorite" onClick={addItem} className="far fa-star" />
+										</span>
 									)}
 									{userRoadStatus.includes('planned') ? (
-										<div
-											onClick={removeItem}
+										<span
+											style={{ marginRight: '10px' }}
 											id="planned-item"
-											className="star-rating toggle-icons toggle-info"
+											className="icon icon-default"
 										>
-											<span className="icon icon-default">
-												<i id="planned" className="fas fa-calendar-check" />
-											</span>
-										</div>
+											<i id="planned" onClick={removeItem} className="fas fa-calendar-check" />
+										</span>
 									) : (
-										<div
-											onClick={addItem}
+										<span
+											style={{ marginRight: '10px' }}
 											id="planned-item"
-											className="star-rating toggle-icons toggle-info"
+											className="icon icon-default"
 										>
-											<span className="icon icon-default">
-												<i id="planned" className="far fa-calendar" />
-											</span>
-										</div>
+											<i id="planned" onClick={addItem} className="far fa-calendar" />
+										</span>
 									)}
 									{userRoadStatus.includes('driven') ? (
-										<div
-											onClick={removeItem}
+										<span
+											style={{ marginRight: '10px' }}
 											id="driven-item"
-											className="star-rating toggle-icons toggle-info"
+											className="icon icon-default"
 										>
-											<span className="icon icon-default">
-												<i id="driven" className="fas fa-check-circle" />
-											</span>
-										</div>
+											<i id="driven" onClick={removeItem} className="fas fa-check-circle" />
+										</span>
 									) : (
-										<div
-											onClick={addItem}
+										<span
+											style={{ marginRight: '10px' }}
 											id="driven-item"
-											className="star-rating toggle-icons toggle-info"
+											className="icon icon-default"
 										>
-											<span className="icon icon-default">
-												<i id="driven" className="far fa-check-circle" />
-											</span>
-										</div>
+											<i id="driven" onClick={addItem} className="far fa-check-circle" />
+										</span>
 									)}
 								</td>
 								{/* <td>{difficultyRating} / 10</td> */}
 							</tr>
 						</tbody>
-					</table>
+					</Table>
 				</div>
 				<div className="RoadDescription-map">
 					<LoadScript googleMapsApiKey="AIzaSyC6fJWNJtLwVCChnqRDrhCmPeLtOn5-wMk">
@@ -293,13 +285,21 @@ function RoadDescription () {
 					</LoadScript>
 				</div>
 			</div>
-			<div className="RoadDescription-description">
+			<div
+				className="RoadDescription-description"
+				style={{
+					marginTop    : '30px',
+					marginBottom : '50px',
+					marginLeft   : '30px',
+					marginRight  : '30px'
+				}}
+			>
 				<h3 className="RoadDescription-description-h3">Description</h3>
 				<p className="RoadDescription-description-p">{road.description}</p>
 			</div>
 			<div className="RoadDescription-RatingForm">{!alreadyRated ? <RatingForm road_id={id} /> : <div />}</div>
 			<div className="RoadDescription-rating">
-				<h3>Ratings</h3>
+				<h3>Reviews</h3>
 				{renderRatingCards(ratings)}
 			</div>
 		</div>

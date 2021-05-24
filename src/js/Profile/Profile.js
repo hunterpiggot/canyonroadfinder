@@ -6,20 +6,22 @@ import RoadCard from '../RoadList/RoadCard';
 import '../../css/Profile.css';
 
 import EditProfileForm from '../Auth/EditProfileForm';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/esm/Col';
+import CardDeck from 'react-bootstrap/CardDeck';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 function Profile () {
 	const [ userInfo, setUserInfo ] = useState({});
 	const [ userFavoriteRoads, setUserFavoriteRoads ] = useState([]);
 	const [ userPlannedRoads, setUserPlannedRoads ] = useState([]);
 	const [ userDrivenRoads, setUserDrivenRoads ] = useState([]);
-	const [ status, setStatus ] = useState('planned');
+	const [ status, setStatus ] = useState('favorite');
 	const [ editProfile, setEditProfile ] = useState(false);
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
-	const [ buttonStyle, setButtonStyle ] = useState({
-		b1 : '#303030',
-		b2 : '#414141',
-		b3 : '#414141'
-	});
 
 	const { user } = useParams();
 	useEffect(
@@ -110,79 +112,66 @@ function Profile () {
 		}
 	};
 
-	const changeStatusPlanned = () => {
-		const newState = {
-			b1 : '#303030',
-			b2 : '#414141',
-			b3 : '#414141'
-		};
-		setButtonStyle(newState);
-		setStatus('planned');
-	};
-	const changeStatusFavorite = () => {
-		const newState = {
-			b1 : '#414141',
-			b2 : '#303030',
-			b3 : '#414141'
-		};
-		setButtonStyle(newState);
-		setStatus('favorite');
-	};
-	const changeStatusDriven = () => {
-		const newState = {
-			b1 : '#414141',
-			b2 : '#414141',
-			b3 : '#303030'
-		};
-		setButtonStyle(newState);
-		setStatus('driven');
-	};
-
 	const renderEditProfile = () => {
 		editProfile ? setEditProfile(false) : setEditProfile(true);
 	};
 	return (
 		<div>
-			<h1>Profile</h1>
-
-			<div className="Profile-UserInfo">
-				<p id="user-name">{userInfo.name}</p>
-				<p id="user-email">{userInfo.email}</p>
-				<p>Planned Roads: {userPlannedRoads.length}</p>
-				<p>Favorite Roads: {userFavoriteRoads.length}</p>
-				<p>Driven Roads: {userDrivenRoads.length}</p>
-				<button onClick={renderEditProfile}>Edit Profile</button>
-				{editProfile ? <EditProfileForm /> : <div />}
-			</div>
-			<div className="Roads-Buttons">
-				<div id="Status-Buttons">
-					<button
-						style={{ backgroundColor: buttonStyle['b1'] }}
-						className="status-button"
-						id="planned-button"
-						onClick={changeStatusPlanned}
-					>
-						Planned
-					</button>
-					<button
-						style={{ backgroundColor: buttonStyle['b2'] }}
-						className="status-button"
-						id="favorite-button"
-						onClick={changeStatusFavorite}
-					>
-						Favorite
-					</button>
-					<button
-						style={{ backgroundColor: buttonStyle['b3'] }}
-						className="status-button"
-						id="driven-button"
-						onClick={changeStatusDriven}
-					>
-						Driven
-					</button>
-				</div>
-				<div className="roads">{renderStatus()}</div>
-			</div>
+			<h1 style={{ marginBottom: '30px' }}>Profile</h1>
+			<Row>
+				<Col md={{ span: 3, offset: 1 }}>
+					<Card>
+						<Card.Body>
+							<Card.Title>{userInfo.name}</Card.Title>
+							<Card.Text>
+								<b>Email: </b>
+								{userInfo.email}
+							</Card.Text>
+							<Card.Text>
+								<b>Favorite Roads: </b>
+								{userFavoriteRoads.length}
+							</Card.Text>
+							<Card.Text>
+								<b>Planned Roads: </b>
+								{userPlannedRoads.length}
+							</Card.Text>
+							<Card.Text>
+								<b>Driven Roads: </b>
+								{userDrivenRoads.length}
+							</Card.Text>
+							<Button variant="primary" onClick={renderEditProfile}>
+								Edit Profile
+							</Button>
+							<Card.Text>{editProfile ? <EditProfileForm /> : <div />}</Card.Text>
+						</Card.Body>
+					</Card>
+				</Col>
+				<Col md={{ span: 7, offset: 0 }}>
+					<Tabs id="controlled-tab-example" activeKey={status} onSelect={(k) => setStatus(k)}>
+						<Tab eventKey="favorite" title="Favorite">
+							<Row>
+								<Col>
+									<CardDeck>{renderStatus()}</CardDeck>
+								</Col>
+							</Row>
+						</Tab>
+						<Tab eventKey="planned" title="Planned">
+							<Row>
+								<Col>
+									<CardDeck>{renderStatus()}</CardDeck>{' '}
+								</Col>
+							</Row>
+						</Tab>
+						<Tab eventKey="driven" title="Driven">
+							<Row>
+								<Col>
+									<CardDeck>{renderStatus()}</CardDeck>{' '}
+								</Col>
+							</Row>
+						</Tab>
+					</Tabs>
+				</Col>
+			</Row>
 		</div>
 	);
 }

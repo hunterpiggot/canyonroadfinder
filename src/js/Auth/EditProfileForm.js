@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 
 import BackEndUrl from '../RouteUrls';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function EditProfileForm () {
 	const history = useHistory();
@@ -41,17 +43,29 @@ function EditProfileForm () {
 	};
 
 	return (
-		<div className="EditProfileForm">
-			<form onSubmit={handleSubmit}>
-				<label>Name</label>
-				<input type="text" value={formData.name} name="name" onChange={handleChange} />
-				{/* <label>Email</label>
-				<input type="email" value={formData.email} name="email" onChange={handleChange} /> */}
-				<label>Password</label>
-				<input type="password" value={formData.password} name="password" onChange={handleChange} />
-				<button>Submit</button>
-			</form>
-		</div>
+		<Form onSubmit={handleSubmit}>
+			<Form.Group controlId="formGroupEmail">
+				<Form.Label>Name</Form.Label>
+				<Form.Control
+					onChange={handleChange}
+					name="name"
+					value={formData.name}
+					type="text"
+					placeholder="Name"
+				/>
+			</Form.Group>
+			<Form.Group controlId="formGroupPassword">
+				<Form.Label>Password</Form.Label>
+				<Form.Control
+					onChange={handleChange}
+					name="password"
+					value={formData.password}
+					type="password"
+					placeholder="Password"
+				/>
+			</Form.Group>
+			<Button onClick={handleSubmit}>Submit</Button>
+		</Form>
 	);
 }
 

@@ -3,6 +3,9 @@ import axios from 'axios';
 
 import BackEndUrl from '../RouteUrls';
 import RoadCard from './RoadCard';
+import CardDeck from 'react-bootstrap/CardDeck';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/esm/Col';
 
 function RoadList () {
 	const [ roads, setRoads ] = useState([]);
@@ -45,8 +48,22 @@ function RoadList () {
 	};
 	return (
 		<div className="RoadList">
-			<h1>Road List</h1>
-			<div className="cards">{renderRoadCards(roads)}</div>
+			<h1
+				style={{
+					marginBottom : '30px',
+					marginTop    : '30px'
+				}}
+			>
+				Road List
+			</h1>
+			<div className="cards">
+				<Row>
+					<Col md={{ span: 10, offset: 1 }}>
+						<CardDeck>{renderRoadCards(roads)}</CardDeck>
+					</Col>
+				</Row>
+				{/* <CardDeck>{renderRoadCards(roads)}</CardDeck> */}
+			</div>
 		</div>
 	);
 }

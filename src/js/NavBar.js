@@ -14,12 +14,11 @@ function NavBar () {
 	}, []);
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-			<Navbar.Brand href="/">Home</Navbar.Brand>
+			<Navbar.Brand href="/roadlist">Road List</Navbar.Brand>
 			<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 			<Navbar.Collapse id="responsive-navbar-nav">
 				<Nav className="mr-auto">
 					<Nav.Link href="/map">Map</Nav.Link>
-					<Nav.Link href="/roadlist">Road List</Nav.Link>
 				</Nav>
 				{isLoggedIn ? (
 					<Nav>

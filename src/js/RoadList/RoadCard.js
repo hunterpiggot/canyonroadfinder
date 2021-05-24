@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../css/RoadCard.css';
 import BackEndUrl from '../RouteUrls';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 
 function RoadCard ({ id, name, location, elevation_change, length, image, status }) {
 	const [ isShowing, setIsShowing ] = useState('card showing');
@@ -24,6 +25,7 @@ function RoadCard ({ id, name, location, elevation_change, length, image, status
 			user_email : localStorage.getItem('user'),
 			status     : target
 		};
+		console.log(data);
 		await axios.post(`${BackEndUrl}/road/userRoadList/add`, data).then((res) => res.data).then((data) => {
 			if (data.status.length) {
 				console.log();
@@ -52,59 +54,51 @@ function RoadCard ({ id, name, location, elevation_change, length, image, status
 	};
 
 	return (
-		<div onClick={showDetails} className={isShowing}>
-			<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.5.0/css/all.css" />
-			<Link to={`/roads/${id}`}>
-				<div className="Road-crd__image-holder">
-					<img className="Road-crd__image" src={image} alt="wave" />
-				</div>
-			</Link>
-			<div className="Road-crd-title">
-				<div id="name-location">
-					<div id="name">{name}</div>
-					<small id="location">{location}</small>
-				</div>
-				{userRoadStatus.includes('favorite') ? (
-					<div onClick={removeItem} id="favorite-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="favorite" className="fas fa-star fa-fw fa-1x" />
-						</span>
-					</div>
-				) : (
-					<div onClick={addItem} id="favorite-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="favorite" className="far fa-star" />
-						</span>
-					</div>
-				)}
-				{userRoadStatus.includes('planned') ? (
-					<div onClick={removeItem} id="planned-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="planned" className="fas fa-calendar-check" />
-						</span>
-					</div>
-				) : (
-					<div onClick={addItem} id="planned-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="planned" className="far fa-calendar" />
-						</span>
-					</div>
-				)}
-				{userRoadStatus.includes('driven') ? (
-					<div onClick={removeItem} id="driven-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="driven" className="fas fa-check-circle" />
-						</span>
-					</div>
-				) : (
-					<div onClick={addItem} id="driven-item" className="star-rating toggle-icons toggle-info">
-						<span className="icon icon-default">
-							<i id="driven" className="far fa-check-circle" />
-						</span>
-					</div>
-				)}
-			</div>
-		</div>
+		<Col md={{ span: 4 }}>
+			{/* <Card style={{ width: '18rem', maxWidth: '500px' }}> */}
+			<Card style={{ maxWidth: '500px', marginBottom: '30px', marginTop: '10px' }}>
+				<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.5.0/css/all.css" />
+				<Link to={`/roads/${id}`}>
+					<Card.Img style={{ height: '18rem' }} variant="top" src={image} />
+					{/* <Card.Img variant="top" src={image} /> */}
+				</Link>
+				<Card.Body>
+					<Link to={`/roads/${id}`}>
+						<Card.Title>{name}</Card.Title>
+						<Card.Text>{location}</Card.Text>
+					</Link>
+					<Card.Text>
+						{userRoadStatus.includes('favorite') ? (
+							<span style={{ marginRight: '10px' }} id="favorite-item" className="icon icon-default">
+								<i id="favorite" onClick={removeItem} className="fas fa-star fa-fw fa-1x" />
+							</span>
+						) : (
+							<span style={{ marginRight: '10px' }} id="favorite-item" className="icon icon-default">
+								<i id="favorite" onClick={addItem} className="far fa-star" />
+							</span>
+						)}
+						{userRoadStatus.includes('planned') ? (
+							<span style={{ marginRight: '10px' }} id="planned-item" className="icon icon-default">
+								<i id="planned" onClick={removeItem} className="fas fa-calendar-check" />
+							</span>
+						) : (
+							<span style={{ marginRight: '10px' }} id="planned-item" className="icon icon-default">
+								<i id="planned" onClick={addItem} className="far fa-calendar" />
+							</span>
+						)}
+						{userRoadStatus.includes('driven') ? (
+							<span style={{ marginRight: '10px' }} id="driven-item" className="icon icon-default">
+								<i id="driven" onClick={removeItem} className="fas fa-check-circle" />
+							</span>
+						) : (
+							<span style={{ marginRight: '10px' }} id="driven-item" className="icon icon-default">
+								<i id="driven" onClick={addItem} className="far fa-check-circle" />
+							</span>
+						)}
+					</Card.Text>
+				</Card.Body>
+			</Card>
+		</Col>
 	);
 }
 
