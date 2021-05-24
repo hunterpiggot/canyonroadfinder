@@ -289,8 +289,14 @@ function RoadDescription () {
 			</div>
 			<div className="RoadDescription-RatingForm">{!alreadyRated ? <RatingForm road_id={id} /> : <div />}</div>
 			<div className="RoadDescription-rating">
-				<h3>Reviews</h3>
-				{renderRatingCards(ratings)}
+				{ratings['ratings'].length > 0 ? (
+					<div>
+						<h3>Reviews</h3>
+						{renderRatingCards(ratings)}{' '}
+					</div>
+				) : (
+					<div />
+				)}
 			</div>
 		</div>
 	);
