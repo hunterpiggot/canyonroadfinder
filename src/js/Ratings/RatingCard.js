@@ -5,7 +5,7 @@ import '../../css/RatingCard.css';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-function RatingCard ({ overall, difficulty, user_email, description, road_id }) {
+function RatingCard ({ overall, difficulty, user_email, description, road_id, rating_count }) {
 	const removeRating = async () => {
 		const data = {
 			user_email : localStorage.getItem('user')
@@ -32,6 +32,10 @@ function RatingCard ({ overall, difficulty, user_email, description, road_id }) 
 					<p>
 						<b>Difficulty: </b>
 						{difficulty}
+					</p>
+					<p>
+						<b>RATING COUNT: </b>
+						{rating_count}
 					</p>
 					<footer className="blockquote-footer">
 						<cite title="Source Title">{user_email.split('@')[0]}</cite>

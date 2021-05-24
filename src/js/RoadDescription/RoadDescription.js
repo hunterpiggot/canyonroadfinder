@@ -33,6 +33,7 @@ function RoadDescription () {
 			};
 			const getRatings = async () => {
 				const res = await axios(`${BackEndUrl}/road/${id}/rating`);
+				console.log(res.data);
 				setRatings(res.data);
 				let overallRatingSum = 0;
 				let difficultyRatingSum = 0;
@@ -74,6 +75,7 @@ function RoadDescription () {
 				user_email={r.user_email}
 				description={r.description}
 				road_id={r.road_id}
+				rating_count={r.rating_count}
 			/>
 		));
 		return ratingList;
