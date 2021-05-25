@@ -16,7 +16,7 @@ import '../css/App.css';
 function App () {
 	useEffect(() => {
 		function componentWillMount () {
-			const API_KEY = process.env;
+			const API_KEY = process.env.TEST_KEY;
 			console.log(API_KEY);
 		}
 		componentWillMount();
