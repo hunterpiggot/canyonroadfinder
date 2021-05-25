@@ -23,6 +23,7 @@ function RoadDescription () {
 	useEffect(
 		() => {
 			const checkUserLocation = () => {
+				// console.log(process.env.REACT_APP_GOOGLE_API_KEY);
 				if (localStorage.getItem('location')) {
 					setUserLocation(true);
 				}
