@@ -28,6 +28,7 @@ function Profile () {
 		() => {
 			const userDetails = async () => {
 				const userDetails = await axios.get(`${BackEndUrl}/users/${user}`);
+				// console.log(userDetails.data);
 				setUserInfo(userDetails.data);
 			};
 			const getUsersTaggedRoads = async () => {
@@ -139,9 +140,16 @@ function Profile () {
 								<b>Driven Roads: </b>
 								{userDrivenRoads.length}
 							</Card.Text>
-							<Button variant="primary" onClick={renderEditProfile}>
+							{localStorage.getItem('user') === userInfo['email'] ? (
+								<Button variant="primary" onClick={renderEditProfile}>
+									Edit Profile
+								</Button>
+							) : (
+								<div />
+							)}
+							{/* <Button variant="primary" onClick={renderEditProfile}>
 								Edit Profile
-							</Button>
+							</Button> */}
 							<Card.Text>{editProfile ? <EditProfileForm /> : <div />}</Card.Text>
 						</Card.Body>
 					</Card>
