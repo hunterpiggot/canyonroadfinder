@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 
@@ -14,13 +14,6 @@ import Profile from './Profile/Profile';
 import '../css/App.css';
 
 function App () {
-	useEffect(() => {
-		function componentWillMount () {
-			const API_KEY = process.env.TEST_KEY;
-			console.log(API_KEY);
-		}
-		componentWillMount();
-	});
 	return (
 		<div className="App">
 			<BrowserRouter>

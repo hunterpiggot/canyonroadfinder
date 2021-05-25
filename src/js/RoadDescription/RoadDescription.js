@@ -23,7 +23,6 @@ function RoadDescription () {
 	useEffect(
 		() => {
 			const checkUserLocation = () => {
-				// console.log(process.env.REACT_APP_GOOGLE_API_KEY);
 				if (localStorage.getItem('location')) {
 					setUserLocation(true);
 				}
@@ -266,7 +265,7 @@ function RoadDescription () {
 					</Table>
 				</div>
 				<div className="RoadDescription-map">
-					<LoadScript googleMapsApiKey="AIzaSyC6fJWNJtLwVCChnqRDrhCmPeLtOn5-wMk">
+					<LoadScript googleMapsApiKey={`${process.env.REACT_APP_TEST_KEY}`}>
 						<GoogleMap mapContainerStyle={mapStyles} zoom={15} center={defaultCenter}>
 							<KmlLayer
 								url="https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=17EJOcSANg7JpUX_qoPOhTdz0ATXCDY9F"

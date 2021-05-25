@@ -27,7 +27,7 @@ function Map () {
 		width  : '100%'
 	};
 	return (
-		<LoadScript googleMapsApiKey="AIzaSyC6fJWNJtLwVCChnqRDrhCmPeLtOn5-wMk">
+		<LoadScript googleMapsApiKey={`${process.env.REACT_APP_TEST_KEY}`}>
 			<GoogleMap mapContainerStyle={mapStyles} zoom={13} center={location}>
 				<KmlLayer
 					url="https://www.google.com/maps/d/u/0/kml?forcekml=1&mid=17EJOcSANg7JpUX_qoPOhTdz0ATXCDY9F"
