@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 
 function RatingFrom ({ road_id }) {
+	// All the form information
 	const [ formData, setFromData ] = useState({
 		road_id     : road_id,
 		user_email  : localStorage.getItem('user'),
@@ -15,6 +16,7 @@ function RatingFrom ({ road_id }) {
 		description : ''
 	});
 
+	// When the user types in the inputs, this sees the change and updates the state
 	const handleChange = (e) => {
 		const val = e.target.value;
 		setFromData({
@@ -22,7 +24,7 @@ function RatingFrom ({ road_id }) {
 			[e.target.name]: val
 		});
 	};
-
+	// When the user submits the form, it make a post request to the database to reflect the changes. If it worked, it sets the state values to empty and reloads the page
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		await axios
@@ -99,24 +101,6 @@ function RatingFrom ({ road_id }) {
 				</Button>
 			</Form>
 		</div>
-		// <div className="RatingFrom">
-		// 	<form onSubmit={handleSubmit}>
-		// 		<label>Overall (1-10)</label>
-		// 		<input value={formData.overall} name="overall" onChange={handleChange} type="number" min="1" max="10" />
-		// 		<label>Difficulty (1-10)</label>
-		// 		<input
-		// 			value={formData.difficulty}
-		// 			name="difficulty"
-		// 			onChange={handleChange}
-		// 			type="number"
-		// 			min="1"
-		// 			max="10"
-		// 		/>
-		// 		<label>Description</label>
-		// 		<input type="text" value={formData.description} name="description" onChange={handleChange} />
-		// 		<button>Submit</button>
-		// 	</form>
-		// </div>
 	);
 }
 

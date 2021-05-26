@@ -9,28 +9,38 @@ import RatingForm from '../Ratings/RatingForm';
 import Table from 'react-bootstrap/Table';
 
 function RoadDescription () {
+	// Gets the road id
 	let { id } = useParams();
 
+	// Stores the road information
 	const [ road, setRoad ] = useState({});
+	// Stores all the reviews
 	const [ ratings, setRatings ] = useState({ ratings: [] });
+	// Stores the overall rating average
 	const [ overallRating, setOverallRating ] = useState('-');
+	// Stores the difficulty rating average
 	const [ difficultyRating, setDifficultyRating ] = useState('-');
+	// Sees if the user has already left a review
 	const [ alreadyRated, setAlreadyRated ] = useState(false);
+	// Sees whta the status for the road is and can change when the user changes it
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
-
+	// sees if the user has a location saved in local storage
 	const [ userLocation, setUserLocation ] = useState(false);
 
 	useEffect(
 		() => {
+			// This sees if the user has a location, if it does, it chagnes the userLocation state to reflect that
 			const checkUserLocation = () => {
 				if (localStorage.getItem('location')) {
 					setUserLocation(true);
 				}
 			};
+			// Sends a request to the database to get the road information
 			const getRoad = async () => {
 				const res = await axios(`${BackEndUrl}/road/${id}`);
 				setRoad(res.data);
 			};
+			// Sends a request to the database to get all the reviews for the road. If there are reviews, is sees if the there are more than 4 and sets changes the overall rating and difficulty rating
 			const getRatings = async () => {
 				const res = await axios(`${BackEndUrl}/road/${id}/rating`);
 				setRatings(res.data);
@@ -48,6 +58,7 @@ function RoadDescription () {
 					setDifficultyRating(Math.round(difficultyRatingSum / res.data['ratings'].length * 100) / 100);
 				}
 			};
+			// Gets the status of the road for the user and reflects that in state
 			const getRoadStatus = async () => {
 				if (localStorage.getItem('user')) {
 					const res = await axios(`${BackEndUrl}/road/userRoadList/${localStorage.getItem('user')}/${id}`);
@@ -63,6 +74,7 @@ function RoadDescription () {
 		[ id ]
 	);
 
+	// For all the reviews, it calls this function to create a rating card
 	const renderRatingCards = (ratings) => {
 		const ratingList = ratings['ratings'].map((r) => (
 			<RatingCard
@@ -77,18 +89,21 @@ function RoadDescription () {
 		));
 		return ratingList;
 	};
-
 	const mapStyles = {
 		height : '100%',
 		width  : '100%'
 	};
-
+	// If it is a loop, it will change the bool to a string or it will just use false
 	const loop = road.loop ? road.loop.toString() : 'false';
+	// If there is a latlong to the road, it will set it as that, or it will use a default value
 	const latlng = road.latLong ? road.latLong.split(', ') : [ '38.8320083404165', '-104.8422776269326' ];
+	// This sets the center of the viewing of the map
 	const defaultCenter = {
 		lat : Number(latlng[0]),
 		lng : Number(latlng[1])
 	};
+
+	// This gets the users current location if the user allows it. This then updates the database to set the location
 
 	const getLocation = () => {
 		try {
@@ -123,6 +138,8 @@ function RoadDescription () {
 		}
 	};
 
+	// This function is called when a user adds a status to a road. It sees what is being changed and sends a post request to the database to reflect the changes. If the request worked, it changes the state and updates the page
+
 	const addItem = async (e) => {
 		const target = e.target.id;
 		let data = {
@@ -136,6 +153,7 @@ function RoadDescription () {
 			}
 		});
 	};
+	// This is the same as the other function but instead of adding, it removes the status
 
 	const removeItem = async (e) => {
 		const target = e.target.id;

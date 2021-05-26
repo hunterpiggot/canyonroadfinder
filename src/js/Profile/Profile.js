@@ -15,26 +15,36 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 function Profile () {
+	// The user information
 	const [ userInfo, setUserInfo ] = useState({});
+	// All of their favorited roads
 	const [ userFavoriteRoads, setUserFavoriteRoads ] = useState([]);
+	// All of their planned roads
 	const [ userPlannedRoads, setUserPlannedRoads ] = useState([]);
+	// All of their driven roads
 	const [ userDrivenRoads, setUserDrivenRoads ] = useState([]);
+	// This will change depending on the tab the user is on, default is favorite
 	const [ status, setStatus ] = useState('favorite');
+	// This will change if the user is trying to edit their profile
 	const [ editProfile, setEditProfile ] = useState(false);
+	// This stores all of the users road statuses
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
 
 	const { user } = useParams();
 	useEffect(
 		() => {
+			// get request to get the users information and saves it to state
 			const userDetails = async () => {
 				const userDetails = await axios.get(`${BackEndUrl}/users/${user}`);
 				// console.log(userDetails.data);
 				setUserInfo(userDetails.data);
 			};
+			// Gets the users road statuses
 			const getUsersTaggedRoads = async () => {
 				const res = await axios(`${BackEndUrl}/users/${localStorage.getItem('user')}/roads`);
 				setUserRoadStatus(res.data.roads);
 			};
+			// Gets all of the users road statuses. For every road, it gets the road and saves the information to state
 			const userRoads = async () => {
 				const userRoads = await axios.get(`${BackEndUrl}/users/${user}/roads`);
 				let favoriteRoadsList = [];
@@ -78,6 +88,8 @@ function Profile () {
 		[ user ]
 	);
 
+	// This is called with a list of road to render all of the raod cards
+
 	const renderRoadCards = (roads) => {
 		const roadList = roads.map((r) => {
 			let status = [];
@@ -101,6 +113,7 @@ function Profile () {
 		});
 		return roadList;
 	};
+	// When the user changes tab, this will call the road cards with the correct roads as a list
 	const renderStatus = () => {
 		if (status === 'planned') {
 			return renderRoadCards(userPlannedRoads);
@@ -112,7 +125,7 @@ function Profile () {
 			return renderRoadCards(userFavoriteRoads);
 		}
 	};
-
+	// This functino is called when the user hits the edit button, changes the state and if this is true, it renders the edit profile form
 	const renderEditProfile = () => {
 		editProfile ? setEditProfile(false) : setEditProfile(true);
 	};

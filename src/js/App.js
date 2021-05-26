@@ -14,6 +14,7 @@ import Profile from './Profile/Profile';
 import '../css/App.css';
 
 function App () {
+	// Rendering Navbar and setting up all the routes that will be used
 	return (
 		<div className="App">
 			<BrowserRouter>

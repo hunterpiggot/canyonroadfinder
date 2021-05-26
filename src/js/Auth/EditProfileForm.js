@@ -2,17 +2,22 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 
+// Importing Bootstrap components and the url for the back end
+
 import BackEndUrl from '../RouteUrls';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function EditProfileForm () {
 	const history = useHistory();
+	// This is where the form values are stored
 	const [ formData, setFromData ] = useState({
 		name     : '',
 		email    : '',
 		password : ''
 	});
+
+	// When the user types in the input, this is what updates the state to refelect the changes
 
 	const handleChange = (e) => {
 		const val = e.target.value;
@@ -21,6 +26,8 @@ function EditProfileForm () {
 			[e.target.name]: val
 		});
 	};
+
+	// When the user submits the form, this will make a post request to the back end to update the database
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -41,6 +48,8 @@ function EditProfileForm () {
 		}
 		history.push(`/profile/${localStorage.getItem('user')}`);
 	};
+
+	// Bootstrap handles the form css, this is two inputs but the state is set up for a third (email)
 
 	return (
 		<Form onSubmit={handleSubmit}>

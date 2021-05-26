@@ -9,14 +9,16 @@ import Col from 'react-bootstrap/esm/Col';
 import Button from 'react-bootstrap/Button';
 
 function SignUpForm () {
+	// This state hold all of the form information
 	const [ formData, setFormData ] = useState({
 		name     : '',
 		email    : '',
 		password : ''
 	});
-
+	// This state will change if the user has put in invalid information
 	const [ invalidInput, setInvalidInput ] = useState('');
 
+	// When the user puts text in the input, this is what will update the state to reflect the information
 	const handleChange = (e) => {
 		const value = e.target.value;
 		setFormData({
@@ -24,7 +26,7 @@ function SignUpForm () {
 			[e.target.name]: value
 		});
 	};
-
+	// When the user submits the form, this funtion is called. It checks to see if the inputs are filled, if not, it changes the invalidInput state. If it is filled out, it sends a post request to the back end. This will create the user. If it is a valid email, it will redirect them to the roadlist page. If it is not a valid email, it will change the invalidInput state.
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (!formData['name'].length || !formData['email'] || !formData['password']) {

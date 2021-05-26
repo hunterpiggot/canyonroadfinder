@@ -6,8 +6,10 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 
 function RoadCard ({ id, name, location, elevation_change, length, image, status }) {
+	// This saves the users road statuses to state so they can change without a page reload
 	const [ userRoadStatus, setUserRoadStatus ] = useState(status);
 
+	// This function is called when a user adds a status to a road. It sees what is being changed and sends a post request to the database to reflect the changes. If the request worked, it changes the state and updates the page
 	const addItem = async (e) => {
 		const target = e.target.id;
 		let data = {
@@ -22,6 +24,8 @@ function RoadCard ({ id, name, location, elevation_change, length, image, status
 			}
 		});
 	};
+
+	// This is the same as the other function but instead of adding, it removes the status
 
 	const removeItem = async (e) => {
 		const target = e.target.id;

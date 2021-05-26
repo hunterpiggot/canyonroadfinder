@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 function RatingCard ({ overall, difficulty, user_email, description, road_id, rating_count }) {
+	// When the user has made a review, a delete button appears. When clicked, this function is called. This send a post request to the back end to remove it from the database. It then refreshes the page.
 	const removeRating = async () => {
 		const data = {
 			user_email : localStorage.getItem('user')
@@ -13,6 +14,7 @@ function RatingCard ({ overall, difficulty, user_email, description, road_id, ra
 		axios.post(`${BackEndUrl}/road/${road_id}/rating/delete`, data);
 		window.location.replace(`/roads/${road_id}`);
 	};
+
 	return (
 		<Card
 			style={{

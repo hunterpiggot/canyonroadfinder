@@ -8,8 +8,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/esm/Col';
 
 function RoadList () {
+	// This gets all the road in the database and gets all the roads the user has added to their statuses and saves them to state
 	const [ roads, setRoads ] = useState([]);
 	const [ userRoadStatus, setUserRoadStatus ] = useState([]);
+
 	useEffect(() => {
 		const getRoads = async () => {
 			const res = await axios(`${BackEndUrl}/roadlist`);
@@ -23,6 +25,7 @@ function RoadList () {
 		getRoads();
 	}, []);
 
+	// This will render all the roads and format them into a card. This also sends the status for every road so the user can see if they have liked, planned or driven a road
 	const renderRoadCards = (roads) => {
 		const roadList = roads.map((r) => {
 			let status = [];

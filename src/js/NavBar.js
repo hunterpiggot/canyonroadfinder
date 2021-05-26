@@ -3,6 +3,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
 function NavBar () {
+	// This state and use effect checks if a user is logged in. If they are, it changes the nav bar to not say login/signup and allow them to logout or view their profile
+
 	const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 	useEffect(() => {
 		const checkLoggedIn = () => {
